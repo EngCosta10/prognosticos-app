@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../utils/firebase';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -9,7 +11,7 @@ export default function SignupPage() {
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     if (password !== confirm) {
@@ -17,9 +19,12 @@ export default function SignupPage() {
       return;
     }
 
-    // Simulação de sucesso no registo
-    localStorage.setItem('auth', 'true');
-    router.push('/premium');
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      router.push('/premium');
+    } catch (err) {
+      setError('Erro ao criar conta: ' + err.message);
+    }
   };
 
   return (

@@ -1,6 +1,15 @@
 import Head from 'next/head'
 import Header from '../components/Header'
 
+
+export default function Home() {
+  return (
+    <main style={{ padding: '2rem' }}>
+      <h1>🏠 Bem-vindo à App de Prognósticos</h1>
+      <p>Consulta os jogos, odds e análises exclusivas.</p>
+    </main>
+  );
+}
 export default function Home() {
    
     const handleCheckout = async () => {
